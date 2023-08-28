@@ -1,5 +1,5 @@
 import './App.css';
-import {decryptMessage, str2ab} from "./crypto";
+import {decodeBase64EncryptedMessage, decryptMessage} from "./crypto";
 import {useEffect, useState} from "react";
 
 
@@ -8,7 +8,7 @@ function Decypherer({privateKey, result}) {
 
   useEffect(() => {
     if (result)
-      decryptMessage(privateKey, str2ab(window.atob(decodeURIComponent(result)))).then(code => {
+      decryptMessage(privateKey, decodeBase64EncryptedMessage(decodeURIComponent(result))).then(code => {
         setPlaintext(code);
       });
   }, [result]);
