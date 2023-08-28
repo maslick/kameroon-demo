@@ -1,0 +1,33 @@
+name: deploy
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: kameroon-demo
+      url: https://kameroon-demo.web.app
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v2
+      - name: install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: install npm dependencies
+        run: npm ci
+      - name: build React bundle
+        run: npm run build
+        env:
+          GENERATE_SOURCEMAP: false
+          DISABLE_ESLINT_PLUGIN: true
+      - name: push to Firebase
+        uses: w9jds/firebase-action@v2.0.0
+        with:
+          args: deploy --only hosting:demo
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
