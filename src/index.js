@@ -14,17 +14,22 @@ import {
 
 let privateKey = null;
 let publicKey = null;
+
 try {
   const keys = await fetchKeysFromLocalStorage();
   privateKey = keys.privateKey;
   publicKey = keys.publicKey;
 }
 catch (e) {
-  console.warn("keys are not in cache, creating new...");
+  console.warn(`keys are not in cache (${e}), creating new...`);
   const keyPair = await createKeys();
   privateKey = keyPair.privateKey;
   publicKey = keyPair.publicKey;
   await saveKeysToLocalStorage({privateKey, publicKey});
+
+  const keys = await fetchKeysFromLocalStorage();
+  privateKey = keys.privateKey;
+  publicKey = keys.publicKey;
 }
 
 const RootEl = () => (
