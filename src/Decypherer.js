@@ -1,5 +1,5 @@
 import './App.css';
-import {decodeBase64EncryptedMessage, decryptMessage} from "./crypto";
+import {decodeBase64EncryptedMessage, decryptMessage} from "@maslick/kameroon";
 import {useEffect, useState} from "react";
 
 

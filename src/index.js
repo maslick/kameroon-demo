@@ -9,7 +9,7 @@ import {
   createKeys,
   fetchKeysFromLocalStorage,
   saveKeysToLocalStorage,
-} from "./crypto";
+} from "@maslick/kameroon";
 
 
 let privateKey = null;
